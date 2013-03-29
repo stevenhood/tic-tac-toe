@@ -12,7 +12,6 @@ int testHorizontal();
 int testVertical();
 int testDiagonal();
 
-// The board is global
 //        y  x
 int board[3][3];
 
@@ -52,8 +51,21 @@ int main(int argc, char *argv[]) {
 }
 
 int makeMove(int player, int x, int y) {
-    // Do not allow a move that has already been made in that position
-    // - or coordinates that are out of bounds.
+    // NB: Before being passed to this procedure, the x
+    // and y values are each decremented by 1 so that valid
+    // input coordinates (1 to 3) will map to elements within
+    // the bounds of the array.
+
+    // Flip value of y from 0 to 2 and vice versa so that
+    // the value of the y axis ascends from bottom to top.
+    if (y == 0) {
+        y = 2;
+    } else if (y == 2) {
+        y = 0;
+    }
+
+    // Do not allow a move that has already been made in 
+    // that position, nor coordinates that are out of bounds.
     if (board[y][x] > 0 || x < 0 || x > 2 || y < 0 || y > 2) {
         return FALSE;
     } else {
@@ -69,7 +81,6 @@ void clearBoard() {
             board[y][x] = 0;
         }
     }
-    return;
 }
 
 void printBoard() {
@@ -93,13 +104,13 @@ void printBoard() {
         printf("\n");
 
         if (y < 2) {
-            printf("   ---|---|---\n"); // Separator
+            // Separator
+            printf("   ---|---|---\n");
         } else {
             break;
         }
 
     }
-    return;
 }
 
 int testGoal() {
@@ -116,10 +127,12 @@ int testGoal() {
 }
 
 int testHorizontal() {
-    // Test for equality between each horizontally adjacent position (excluding equality to zero).
+    // Test for equality between each horizontally adjacent
+    // position (excluding equality to zero).
     int x;
     for (x = 0; x < 3; x++) {
-        if (board[0][x] != 0 && board[0][x] == board[1][x] && board[1][x] == board[2][x]) {
+        if (board[0][x] != 0 && board[0][x] == board[1][x] 
+	    && board[1][x] == board[2][x]) {
             return TRUE;
         }
     }
@@ -130,7 +143,8 @@ int testVertical() {
     // Tests equality of vertical positions.
     int y;
     for (y = 0; y < 3; y++) {
-        if (board[y][0] != 0 && board[y][0] == board[y][1] && board[y][1] == board[y][2]) {
+        if (board[y][0] != 0 && board[y][0] == board[y][1] 
+            && board[y][1] == board[y][2]) {
             return TRUE;
         }
     }
@@ -139,9 +153,11 @@ int testVertical() {
 
 int testDiagonal() {
     // Tests equality of the two possible diagonal positions.
-    if (board[0][0] != 0 && board[0][0] == board[1][1] && board[1][1] == board [2][2]) {
+    if (board[0][0] != 0 && board[0][0] == board[1][1] 
+        && board[1][1] == board [2][2]) {
         return TRUE;
-    } else if (board[2][0] != 0 && board[2][0] == board[1][1] && board[1][1] == board [0][2]) {
+    } else if (board[2][0] != 0 && board[2][0] == board[1][1] 
+               && board[1][1] == board [0][2]) {
         return TRUE;
     }
     return FALSE;

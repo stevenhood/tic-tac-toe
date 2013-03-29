@@ -31,9 +31,11 @@ Playing the game
 
   Two players will take turns to input coordinates as to where they wish to place a mark. Coordinates are written in the form "x,y" where x is the column and y is the row. The program will only accept two integers separated by a comma. Once you have entered your coordinates, press the Enter/Return key. A new board will be displayed below with the updated spaces.
 
-   1,1 | 2,1 | 3,1
-   1,2 | 2,2 | 3,2
    1,3 | 2,3 | 3,3
+   
+   1,2 | 2,2 | 3,2
+   
+   1,1 | 2,1 | 3,1
 
   Coordinates can range from 1,1 to 3,3. Any values higher or lower will be caught as invalid by the program.
 
