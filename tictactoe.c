@@ -1,7 +1,6 @@
 #include <stdio.h>
 
-#define TRUE 1
-#define FALSE 0
+typedef enum { false, true } bool;
 
 int makeMove(int player, int x, int y);
 void clearBoard();
@@ -15,7 +14,8 @@ int testDiagonal();
 //        y  x
 int board[3][3];
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     int turns = 0;
     int currentPlayer;
     int currentX;
@@ -50,7 +50,8 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-int makeMove(int player, int x, int y) {
+int makeMove(int player, int x, int y)
+{
     // NB: Before being passed to this procedure, the x
     // and y values are each decremented by 1 so that valid
     // input coordinates (1 to 3) will map to elements within
@@ -67,14 +68,15 @@ int makeMove(int player, int x, int y) {
     // Do not allow a move that has already been made in 
     // that position, nor coordinates that are out of bounds.
     if (board[y][x] > 0 || x < 0 || x > 2 || y < 0 || y > 2) {
-        return FALSE;
+        return false;
     } else {
         board[y][x] = player;
-        return TRUE;
+        return true;
     }
 }
 
-void clearBoard() {
+void clearBoard()
+{
     int y, x;
     for (y = 0; y < 3; y++) {
         for (x = 0; x < 3; x++) {
@@ -83,7 +85,8 @@ void clearBoard() {
     }
 }
 
-void printBoard() {
+void printBoard()
+{
     int y, x;
     for (y = 0; y < 3; y++) {
 
@@ -113,53 +116,52 @@ void printBoard() {
     }
 }
 
-int testGoal() {
+int testGoal()
+{
     // Run all tests sequentially.
-    if (testHorizontal()) {
-        return TRUE;
-    } else if (testVertical()) {
-        return TRUE;
-    } else if (testDiagonal()) {
-        return TRUE;
+    if (testHorizontal() || testVertical() || testDiagonal()) {
+        return true;
     } else {
-        return FALSE;
+        return false;
     }
 }
 
-int testHorizontal() {
+int testHorizontal()
+{
     // Test for equality between each horizontally adjacent
     // position (excluding equality to zero).
     int x;
     for (x = 0; x < 3; x++) {
         if (board[0][x] != 0 && board[0][x] == board[1][x] 
 	    && board[1][x] == board[2][x]) {
-            return TRUE;
+            return true;
         }
     }
-    return FALSE;
+    return false;
 }
 
-int testVertical() {
+int testVertical()
+{
     // Tests equality of vertical positions.
     int y;
     for (y = 0; y < 3; y++) {
         if (board[y][0] != 0 && board[y][0] == board[y][1] 
             && board[y][1] == board[y][2]) {
-            return TRUE;
+            return true;
         }
     }
-    return FALSE;
+    return false;
 }
 
-int testDiagonal() {
+int testDiagonal()
+{
     // Tests equality of the two possible diagonal positions.
     if (board[0][0] != 0 && board[0][0] == board[1][1] 
         && board[1][1] == board [2][2]) {
-        return TRUE;
+        return true;
     } else if (board[2][0] != 0 && board[2][0] == board[1][1] 
                && board[1][1] == board [0][2]) {
-        return TRUE;
+        return true;
     }
-    return FALSE;
+    return false;
 }
-
